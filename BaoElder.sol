@@ -32,14 +32,14 @@ contract BaoElder is ERC721Enumerable, Ownable {
 		return uri;
 	}
 
-    function tokenURI(uint256 tokenId) public view override returns (string memory) {
-        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+    	function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        	require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
 
-        string memory baseURI = _baseURI();
-        return bytes(baseURI).length > 0
-            ? string(abi.encodePacked(baseURI, suffix))
-            : '';
-    }
+        	string memory baseURI = _baseURI();
+        	return bytes(baseURI).length > 0
+            	? string(abi.encodePacked(baseURI, suffix))
+            	: '';
+    	}
 
 	function updateURI(string memory _newURI) public onlyOwner {
 		uri = _newURI;
@@ -51,7 +51,7 @@ contract BaoElder is ERC721Enumerable, Ownable {
 
 	function updateMerkleRoot(bytes32 _root) external onlyOwner {
         merkleRoot = _root;
-    }
+    	}
 
 	function updateSuffix(string memory _suffix) public onlyOwner {
 		suffix = _suffix;
@@ -65,7 +65,7 @@ contract BaoElder is ERC721Enumerable, Ownable {
 		ERC721.safeTransferFrom(from, to, tokenId, _data);
 	}
 
-		function mintBaoGWithSignature(bytes32[] calldata _proof) public {
+	function mintBaoGWithSignature(bytes32[] calldata _proof) public {
 		require(block.timestamp >= whitelistSale, "Public sale not ready");
 		require(!whitelistClaimed[msg.sender], "Caller not part of tree");
 
@@ -74,11 +74,11 @@ contract BaoElder is ERC721Enumerable, Ownable {
 
 		whitelistClaimed[msg.sender] = true;
 
-    uint256 supply = totalSupply();
-    require(supply + 1 <= MAX_SUPPLY, "Can't mint over limit");
-    _mint(msg.sender, supply + 1);
-    emit BaoGMinted(supply + 1, msg.sender);
- }
+    		uint256 supply = totalSupply();
+    		require(supply + 1 <= MAX_SUPPLY, "Can't mint over limit");
+   		_mint(msg.sender, supply + 1);
+    		emit BaoGMinted(supply + 1, msg.sender);
+ 	}
 
 	function fetchEther() external onlyOwner {
 		payable(msg.sender).transfer(address(this).balance);
